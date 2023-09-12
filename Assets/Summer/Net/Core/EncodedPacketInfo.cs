@@ -7,6 +7,6 @@ namespace Summer.Net.Core
     public class EncodedPacketInfo
     {
         public TaskCompletionSource<IProtocol> task;
-        public SignalOnlyAttachment attachment;
+        public SignalAttachment attachment;
     }
 }

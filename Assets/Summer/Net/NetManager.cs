@@ -46,7 +46,7 @@ namespace Summer.Net
                         }
                         else
                         {
-                            completeTask(message.packet, (SignalOnlyAttachment)message.attachment);
+                            completeTask(message.packet, (SignalAttachment)message.attachment);
                         }
                         break;
                     case MessageType.Disconnected:
@@ -151,7 +151,10 @@ namespace Summer.Net
         {
             // 创建一个TaskCompletionSource对象
             TaskCompletionSource<IProtocol> tcs = new TaskCompletionSource<IProtocol>();
-            SignalOnlyAttachment attachment = new SignalOnlyAttachment();
+            // 0 for the server, 1 for the native argument client, 2 for the native no argument client, 12 for the outside client such as browser, mobile
+            SignalAttachment attachment = new SignalAttachment();
+            attachment.client = 12;
+            attachment.taskExecutorHash = -1;
             lock (taskMap)
             {
                 signalId++;
@@ -183,7 +186,7 @@ namespace Summer.Net
             return tcs.Task;
         }
 
-        public void completeTask(IProtocol packet, SignalOnlyAttachment attachment)
+        public void completeTask(IProtocol packet, SignalAttachment attachment)
         {
             lock (taskMap)
             {

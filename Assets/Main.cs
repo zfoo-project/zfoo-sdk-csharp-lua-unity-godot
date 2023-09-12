@@ -32,7 +32,7 @@ public class Main : MonoBehaviour
         var request = new TcpHelloRequest();
         request.message = "unity await request";
         var response = await netManager.asyncAsk(request) as TcpHelloResponse;
-        Debug.Log("await response:" + response);
+        Debug.Log("await response:" + JsonUtility.ToJson(response));
     }
 
     Task<int> GetNumberAsync()

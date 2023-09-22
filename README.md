@@ -2,6 +2,10 @@
 
 zfoo net sdk for unity by C#
 
+```
+support C# in webgl browser
+```
+
 # Start Server
 
 - start server

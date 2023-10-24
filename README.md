@@ -16,11 +16,11 @@ support C# in webgl browser
 - await usage
 
 ```
-var response = await netManager.asyncAsk(request) as TcpHelloResponse;
+var response = await tcpClient.asyncAsk(request) as TcpHelloResponse;
 ```
 
 - send with no response
 
 ```
-netManager.Send(request)
+tcpClient.Send(request)
 ```

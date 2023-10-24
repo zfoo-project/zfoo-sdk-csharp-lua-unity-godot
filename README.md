@@ -1,6 +1,6 @@
 # zfoo sdk of csharp and lua for unity and godot
 
-zfoo net sdk for unity and godot by C# and lua
+zfoo sdk of csharp and lua for unity and godot
 
 ```
 support C# in .net framework

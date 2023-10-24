@@ -1,11 +1,15 @@
-# zfoo-csharp-unity-sdk
+# zfoo sdk of csharp and lua for unity and godot
 
-zfoo net sdk for unity and godot by C#
+zfoo net sdk for unity and godot by C# and lua
 
 ```
 support C# in webgl browser
 
 support C# in .net framework
+
+support C# in unity C# Script
+
+support zfoo lua in xlua
 ```
 
 # Start Server
@@ -21,8 +25,14 @@ support C# in .net framework
 var response = await tcpClient.asyncAsk(request) as TcpHelloResponse;
 ```
 
-- send with no response
+- send packet in C#
 
 ```
 tcpClient.Send(request)
+```
+
+- send packet in lua
+
+```
+send(request)
 ```

@@ -205,7 +205,7 @@ namespace zfoo
             {
                 // add connected event to queue with ip address as data in case
                 // it's needed
-                receiveQueue.Enqueue(new Message(MessageType.Connected, null, null));
+                receiveQueue.Enqueue(new Message(MessageType.Connected, null));
 
                 // let's talk about reading data.
                 // -> normally we would read as much as possible and then
@@ -233,27 +233,8 @@ namespace zfoo
                         break;
                     }
 
-                    ByteBuffer byteBuffer = null;
-                    try
-                    {
-                        byteBuffer = ByteBuffer.ValueOf();
-                        byteBuffer.WriteBytes(content);
-                        var packet = ProtocolManager.Read(byteBuffer);
-                        object attachment = null;
-                        if (byteBuffer.IsReadable() && byteBuffer.ReadBool())
-                        {
-                            attachment = ProtocolManager.Read(byteBuffer);
-                        }
-                        // queue it
-                        receiveQueue.Enqueue(new Message(MessageType.Data, packet, attachment));
-                    }
-                    finally
-                    {
-                        if (byteBuffer != null)
-                        {
-                            byteBuffer.Clear();
-                        }
-                    }
+                    // queue it
+                    receiveQueue.Enqueue(new Message(MessageType.Data, content));
 
                     // and show a warning if the queue gets too big
                     // -> we don't want to show a warning every single time,
@@ -280,7 +261,7 @@ namespace zfoo
 
                 // add 'Disconnected' event to message queue so that the caller
                 // knows that the Connect failed. otherwise they will never know
-                receiveQueue.Enqueue(new Message(MessageType.Disconnected, null, null));
+                receiveQueue.Enqueue(new Message(MessageType.Disconnected, null));
             }
             catch (ThreadInterruptedException)
             {
@@ -315,7 +296,7 @@ namespace zfoo
                 //    where Disconnected -> Reconnect wouldn't work because
                 //    Connected is still true for a short moment before the stream
                 //    would be closed.
-                receiveQueue.Enqueue(new Message(MessageType.Disconnected, null, null));
+                receiveQueue.Enqueue(new Message(MessageType.Disconnected, null));
             }
         }
 

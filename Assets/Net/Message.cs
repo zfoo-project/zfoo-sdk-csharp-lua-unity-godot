@@ -19,14 +19,12 @@ namespace zfoo
     public struct Message
     {
         public MessageType messageType;
-        public object packet;
-        public object attachment;
+        public byte[] buffer;
 
-        public Message(MessageType messageType, object packet, object attachment)
+        public Message(MessageType messageType, byte[] buffer)
         {
             this.messageType = messageType;
-            this.packet = packet;
-            this.attachment = attachment;
+            this.buffer = buffer;
         }
     }
 }

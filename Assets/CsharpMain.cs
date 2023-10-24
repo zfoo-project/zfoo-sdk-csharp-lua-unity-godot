@@ -26,7 +26,7 @@ public class CsharpMain : MonoBehaviour
 
     private async void Start()
     {
-        Debug.Log("start");
+        Debug.Log("start cs test");
         // 初始化协议
         ProtocolManager.InitProtocol();
         
@@ -69,17 +69,36 @@ public class CsharpMain : MonoBehaviour
                     break;
                 case MessageType.Data:
                     // Debug.Log("Data: " + JsonUtils.object2String(message.packet));
-                    if (message.attachment == null)
+                    ByteBuffer byteBuffer = null;
+                    try
                     {
-                        // do something when close
-                        if (_message != null)
+                        byteBuffer = ByteBuffer.ValueOf();
+                        byteBuffer.WriteBytes(message.buffer);
+                        var packet = ProtocolManager.Read(byteBuffer);
+                        object attachment = null;
+                        if (byteBuffer.IsReadable() && byteBuffer.ReadBool())
                         {
-                            _message(message.packet);
+                            attachment = ProtocolManager.Read(byteBuffer);
+                        }
+                        if (attachment == null)
+                        {
+                            // do something when close
+                            if (_message != null)
+                            {
+                                _message(packet);
+                            }
+                        }
+                        else
+                        {
+                            completeTask(packet, (SignalAttachment)attachment);
                         }
                     }
-                    else
+                    finally
                     {
-                        completeTask(message.packet, (SignalAttachment)message.attachment);
+                        if (byteBuffer != null)
+                        {
+                            byteBuffer.Clear();
+                        }
                     }
                     break;
                 case MessageType.Disconnected:
@@ -92,8 +111,6 @@ public class CsharpMain : MonoBehaviour
 
     public void Connect(string url)
     {
-        Close();
-
         Debug.Log("开始连接服务器 url:" + url);
 #if UNITY_WEBGL && !UNITY_EDITOR
             netClient = new WebsocketClient(url);

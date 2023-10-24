@@ -1,9 +1,11 @@
 # zfoo-csharp-unity-sdk
 
-zfoo net sdk for unity by C#
+zfoo net sdk for unity and godot by C#
 
 ```
 support C# in webgl browser
+
+support C# in .net framework
 ```
 
 # Start Server

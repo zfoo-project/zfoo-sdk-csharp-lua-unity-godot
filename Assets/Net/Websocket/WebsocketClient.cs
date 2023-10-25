@@ -16,7 +16,7 @@ namespace zfoo
 
         internal void HandleOnOpen()
         {
-            EventBus.AsyncSubmit(NetOpenEvent.ValueOf());
+            ZfooNet._open();
         }
 
         internal void HandleOnMessage(byte[] content)
@@ -24,24 +24,19 @@ namespace zfoo
             var byteBuffer = ByteBuffer.ValueOf();
             byteBuffer.WriteBytes(content);
             byteBuffer.ReadRawInt();
-            var packet = ProtocolManager.Read(byteBuffer);
-            IProtocol attachment = null;
-            if (byteBuffer.IsReadable() && byteBuffer.ReadBool())
-            {
-                attachment = ProtocolManager.Read(byteBuffer);
-            }
+            var bytes = byteBuffer.ReadBytes(content.Length - 4);
             // queue it
-            receiveQueue.Enqueue(new Message(MessageType.Data, packet, attachment));
+            receiveQueue.Enqueue(new Message(MessageType.Data, bytes));
         }
 
         internal void HandleOnClose()
         {
-            EventBus.AsyncSubmit(NetCloseEvent.ValueOf());
+            ZfooNet._close();
         }
 
         internal void HandleOnError()
         {
-            EventBus.AsyncSubmit(NetErrorEvent.ValueOf());
+            ZfooNet._error();
         }
 
 
@@ -58,7 +53,7 @@ namespace zfoo
 
         public override bool Connected()
         {
-            throw new NotImplementedException();
+            return WebSocketBridge.initialized;
         }
 
         public override void Close()

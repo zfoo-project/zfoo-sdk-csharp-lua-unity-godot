@@ -22,7 +22,7 @@ function send(packet)
     mm = CS.System.IO.MemoryStream()
     mm.Position = 0
     mm:SetLength(0)
-    len = #byteBuffer.buffer
+    len = byteBuffer:getWriteOffset() - 1
     mm:Write(byteBuffer:getBytes(1, len), 0, len)
     CS.zfoolua.LuaMain.Send(mm, len)
 end

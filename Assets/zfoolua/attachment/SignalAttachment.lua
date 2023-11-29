@@ -18,6 +18,16 @@ function SignalAttachment:protocolId()
     return 0
 end
 
+function SignalAttachment:protocolName()
+    return SignalAttachment
+end
+
+function SignalAttachment:__tostring()
+    local jsonTemplate = "{signalId:%s, taskExecutorHash:%s, client:%s, timestamp:%s}"
+    local result = string.format(jsonTemplate, self.signalId, self.taskExecutorHash, self.client, self.timestamp)
+    return result
+end
+
 function SignalAttachment:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

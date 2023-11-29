@@ -14,6 +14,16 @@ function UdpHelloRequest:protocolId()
     return 1200
 end
 
+function UdpHelloRequest:protocolName()
+    return UdpHelloRequest
+end
+
+function UdpHelloRequest:__tostring()
+    local jsonTemplate = "{message:%s}"
+    local result = string.format(jsonTemplate, self.message)
+    return result
+end
+
 function UdpHelloRequest:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

@@ -14,6 +14,16 @@ function WebSocketObjectB:protocolId()
     return 2072
 end
 
+function WebSocketObjectB:protocolName()
+    return WebSocketObjectB
+end
+
+function WebSocketObjectB:__tostring()
+    local jsonTemplate = "{flag:%s}"
+    local result = string.format(jsonTemplate, self.flag)
+    return result
+end
+
 function WebSocketObjectB:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

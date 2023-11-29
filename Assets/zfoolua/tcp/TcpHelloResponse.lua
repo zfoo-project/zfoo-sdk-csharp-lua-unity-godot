@@ -14,6 +14,16 @@ function TcpHelloResponse:protocolId()
     return 1301
 end
 
+function TcpHelloResponse:protocolName()
+    return TcpHelloResponse
+end
+
+function TcpHelloResponse:__tostring()
+    local jsonTemplate = "{message:%s}"
+    local result = string.format(jsonTemplate, self.message)
+    return result
+end
+
 function TcpHelloResponse:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

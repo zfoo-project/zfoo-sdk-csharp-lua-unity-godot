@@ -16,6 +16,16 @@ function TripleLSS:protocolId()
     return 116
 end
 
+function TripleLSS:protocolName()
+    return TripleLSS
+end
+
+function TripleLSS:__tostring()
+    local jsonTemplate = "{left:%s, middle:%s, right:%s}"
+    local result = string.format(jsonTemplate, self.left, self.middle, self.right)
+    return result
+end
+
 function TripleLSS:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

@@ -15,6 +15,16 @@ function PairIntLong:protocolId()
     return 110
 end
 
+function PairIntLong:protocolName()
+    return PairIntLong
+end
+
+function PairIntLong:__tostring()
+    local jsonTemplate = "{key:%s, value:%s}"
+    local result = string.format(jsonTemplate, self.key, self.value)
+    return result
+end
+
 function PairIntLong:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

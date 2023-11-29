@@ -15,6 +15,16 @@ function PairString:protocolId()
     return 112
 end
 
+function PairString:protocolName()
+    return PairString
+end
+
+function PairString:__tostring()
+    local jsonTemplate = "{key:%s, value:%s}"
+    local result = string.format(jsonTemplate, self.key, self.value)
+    return result
+end
+
 function PairString:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

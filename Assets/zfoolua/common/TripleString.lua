@@ -16,6 +16,16 @@ function TripleString:protocolId()
     return 115
 end
 
+function TripleString:protocolName()
+    return TripleString
+end
+
+function TripleString:__tostring()
+    local jsonTemplate = "{left:%s, middle:%s, right:%s}"
+    local result = string.format(jsonTemplate, self.left, self.middle, self.right)
+    return result
+end
+
 function TripleString:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

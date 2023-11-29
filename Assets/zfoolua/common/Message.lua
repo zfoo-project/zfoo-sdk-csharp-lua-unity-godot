@@ -16,6 +16,16 @@ function Message:protocolId()
     return 100
 end
 
+function Message:protocolName()
+    return Message
+end
+
+function Message:__tostring()
+    local jsonTemplate = "{module:%s, code:%s, message:%s}"
+    local result = string.format(jsonTemplate, self.module, self.code, self.message)
+    return result
+end
+
 function Message:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

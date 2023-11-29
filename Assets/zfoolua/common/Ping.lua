@@ -14,6 +14,16 @@ function Ping:protocolId()
     return 103
 end
 
+function Ping:protocolName()
+    return Ping
+end
+
+function Ping:__tostring()
+    local jsonTemplate = "{}"
+    local result = string.format(jsonTemplate, {})
+    return result
+end
+
 function Ping:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

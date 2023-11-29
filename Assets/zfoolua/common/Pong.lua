@@ -14,6 +14,16 @@ function Pong:protocolId()
     return 104
 end
 
+function Pong:protocolName()
+    return Pong
+end
+
+function Pong:__tostring()
+    local jsonTemplate = "{time:%s}"
+    local result = string.format(jsonTemplate, self.time)
+    return result
+end
+
 function Pong:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

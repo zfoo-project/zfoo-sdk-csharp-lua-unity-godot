@@ -16,6 +16,16 @@ function TripleLong:protocolId()
     return 114
 end
 
+function TripleLong:protocolName()
+    return TripleLong
+end
+
+function TripleLong:__tostring()
+    local jsonTemplate = "{left:%s, middle:%s, right:%s}"
+    local result = string.format(jsonTemplate, self.left, self.middle, self.right)
+    return result
+end
+
 function TripleLong:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

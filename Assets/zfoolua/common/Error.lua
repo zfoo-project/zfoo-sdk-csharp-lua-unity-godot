@@ -16,6 +16,16 @@ function Error:protocolId()
     return 101
 end
 
+function Error:protocolName()
+    return Error
+end
+
+function Error:__tostring()
+    local jsonTemplate = "{module:%s, errorCode:%s, errorMessage:%s}"
+    local result = string.format(jsonTemplate, self.module, self.errorCode, self.errorMessage)
+    return result
+end
+
 function Error:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

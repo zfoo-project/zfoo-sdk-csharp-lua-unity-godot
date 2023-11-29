@@ -14,6 +14,16 @@ function WebsocketHelloResponse:protocolId()
     return 1401
 end
 
+function WebsocketHelloResponse:protocolName()
+    return WebsocketHelloResponse
+end
+
+function WebsocketHelloResponse:__tostring()
+    local jsonTemplate = "{message:%s}"
+    local result = string.format(jsonTemplate, self.message)
+    return result
+end
+
 function WebsocketHelloResponse:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

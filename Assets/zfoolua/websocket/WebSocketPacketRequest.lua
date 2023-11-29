@@ -53,6 +53,16 @@ function WebSocketPacketRequest:protocolId()
     return 2070
 end
 
+function WebSocketPacketRequest:protocolName()
+    return WebSocketPacketRequest
+end
+
+function WebSocketPacketRequest:__tostring()
+    local jsonTemplate = "{a:%s, aa:%s, aaa:%s, aaaa:%s, b:%s, bb:%s, bbb:%s, bbbb:%s, c:%s, cc:%s, ccc:%s, cccc:%s, d:%s, dd:%s, e:%s, ee:%s, eee:%s, eeee:%s, f:%s, ff:%s, fff:%s, ffff:%s, jj:%s, jjj:%s, kk:%s, kkk:%s, l:%s, ll:%s, lll:%s, llll:%s, lllll:%s, m:%s, mm:%s, mmm:%s, mmmm:%s, s:%s, ss:%s, sss:%s, ssss:%s, sssss:%s}"
+    local result = string.format(jsonTemplate, self.a, self.aa, self.aaa, self.aaaa, self.b, self.bb, self.bbb, self.bbbb, self.c, self.cc, self.ccc, self.cccc, self.d, self.dd, self.e, self.ee, self.eee, self.eeee, self.f, self.ff, self.fff, self.ffff, self.jj, self.jjj, self.kk, self.kkk, self.l, self.ll, self.lll, self.llll, self.lllll, self.m, self.mm, self.mmm, self.mmmm, self.s, self.ss, self.sss, self.ssss, self.sssss)
+    return result
+end
+
 function WebSocketPacketRequest:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

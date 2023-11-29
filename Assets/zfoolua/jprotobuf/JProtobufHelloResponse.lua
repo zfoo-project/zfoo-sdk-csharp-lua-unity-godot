@@ -14,6 +14,16 @@ function JProtobufHelloResponse:protocolId()
     return 1501
 end
 
+function JProtobufHelloResponse:protocolName()
+    return JProtobufHelloResponse
+end
+
+function JProtobufHelloResponse:__tostring()
+    local jsonTemplate = "{message:%s}"
+    local result = string.format(jsonTemplate, self.message)
+    return result
+end
+
 function JProtobufHelloResponse:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

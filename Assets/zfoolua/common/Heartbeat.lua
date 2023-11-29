@@ -14,6 +14,16 @@ function Heartbeat:protocolId()
     return 102
 end
 
+function Heartbeat:protocolName()
+    return Heartbeat
+end
+
+function Heartbeat:__tostring()
+    local jsonTemplate = "{}"
+    local result = string.format(jsonTemplate, {})
+    return result
+end
+
 function Heartbeat:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

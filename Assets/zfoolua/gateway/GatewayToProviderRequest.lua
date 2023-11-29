@@ -14,6 +14,16 @@ function GatewayToProviderRequest:protocolId()
     return 5000
 end
 
+function GatewayToProviderRequest:protocolName()
+    return GatewayToProviderRequest
+end
+
+function GatewayToProviderRequest:__tostring()
+    local jsonTemplate = "{message:%s}"
+    local result = string.format(jsonTemplate, self.message)
+    return result
+end
+
 function GatewayToProviderRequest:write(buffer, packet)
     if packet == nil then
         buffer:writeInt(0)

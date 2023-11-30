@@ -1,4 +1,4 @@
-protocols = {}
+local protocols = {}
 
 ProtocolManager = {}
 

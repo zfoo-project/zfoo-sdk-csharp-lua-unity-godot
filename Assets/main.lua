@@ -19,7 +19,7 @@ function send(packet)
     local byteBuffer = ByteBuffer:new()
     byteBuffer:writeRawInt(4)
     ProtocolManager.write(byteBuffer, packet)
-    local length = byteBuffer:getWriteOffset()
+    local length = byteBuffer:getWriteOffset() - 1
     local packetLength = length - 4
     byteBuffer:setWriteOffset(1)
     byteBuffer:writeRawInt(packetLength)
@@ -28,9 +28,8 @@ function send(packet)
     mm = CS.System.IO.MemoryStream()
     mm.Position = 0
     mm:SetLength(0)
-    len = byteBuffer:getWriteOffset() - 1
-    mm:Write(byteBuffer:getBytes(1, len), 0, len)
-    CS.zfoolua.LuaMain.Send(mm, len)
+    mm:Write(byteBuffer:getBytes(1, length), 0, length)
+    CS.zfoolua.LuaMain.Send(mm, length)
 end
 
 function receiver(bytes)

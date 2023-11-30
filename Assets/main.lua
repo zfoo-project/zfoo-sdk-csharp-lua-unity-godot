@@ -17,8 +17,14 @@ end
 
 function send(packet)
     local byteBuffer = ByteBuffer:new()
+    byteBuffer:writeRawInt(4)
     ProtocolManager.write(byteBuffer, packet)
-
+    local length = byteBuffer:getWriteOffset()
+    local packetLength = length - 4
+    byteBuffer:setWriteOffset(1)
+    byteBuffer:writeRawInt(packetLength)
+    byteBuffer:setWriteOffset(length)
+    
     mm = CS.System.IO.MemoryStream()
     mm.Position = 0
     mm:SetLength(0)

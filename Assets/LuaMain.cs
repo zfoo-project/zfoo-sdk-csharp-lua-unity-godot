@@ -135,42 +135,14 @@ namespace zfoolua
             mm.Position = 0;
             mm.Read(bytes, 0, len);
             
-            ByteBuffer byteBuffer = null;
-            try
+            var sendSuccess = netClient.Send(bytes);
+            if (!sendSuccess)
             {
-                byteBuffer = ByteBuffer.ValueOf();
-
-                byteBuffer.WriteRawInt(PROTOCOL_HEAD_LENGTH);
-
-                byteBuffer.WriteBytes(bytes);
-
-                byteBuffer.WriteBool(false);
-
-                // 包的长度
-                int length = byteBuffer.WriteOffset();
-
-                int packetLength = length - PROTOCOL_HEAD_LENGTH;
-
-                byteBuffer.SetWriteOffset(0);
-                byteBuffer.WriteRawInt(packetLength);
-                byteBuffer.SetWriteOffset(length);
-
-                var sendSuccess = netClient.Send(byteBuffer.ToBytes());
-                if (!sendSuccess)
+                Debug.Log("send lua message error");
+                // do something when net error
+                if (_error != null)
                 {
-                    Debug.Log("send lua message error");
-                    // do something when net error
-                    if (_error != null)
-                    {
-                        _error();
-                    }
-                }
-            }
-            finally
-            {
-                if (byteBuffer != null)
-                {
-                    byteBuffer.Clear();
+                    _error();
                 }
             }
         }

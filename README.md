@@ -19,7 +19,7 @@ support zfoo lua in xlua
 
 # Start Client
 
-- await usage
+- await usage in C#
 
 ```
 var response = await tcpClient.asyncAsk(request) as TcpHelloResponse;
@@ -29,6 +29,15 @@ var response = await tcpClient.asyncAsk(request) as TcpHelloResponse;
 
 ```
 tcpClient.Send(request)
+```
+
+- async callback in lua
+
+```
+asyncAsk(request,
+        function(answer)
+            print("async ask callback --> ", answer)
+        end)
 ```
 
 - send packet in lua

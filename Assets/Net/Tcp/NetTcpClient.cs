@@ -96,8 +96,15 @@ namespace zfoo
         public override void Close()
         {
             // close client
-            stream.Dispose();
-            client.Dispose();
+            if (stream != null)
+            {
+                stream.Dispose();
+            }
+
+            if (client != null)
+            {
+                client.Dispose();
+            }
 
             // wait until thread finished. this is the only way to guarantee
             // that we can call Connect() again immediately after Disconnect

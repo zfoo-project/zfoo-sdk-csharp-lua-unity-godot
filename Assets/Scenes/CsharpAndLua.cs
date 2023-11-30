@@ -1,14 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using zfoo;
 using zfoocs;
-using Message = zfoo.Message;
 
-// TODO: A heartbeat packet needs to be sent to the server every second, otherwise the server will actively disconnect
-// TODO: 需要每秒钟给服务器发个心跳包 Heartbeat，否则服务器会主动断开连接
-namespace zfooscharp
+namespace zfoo
 {
     public delegate void OnMessage(object packet);
 
@@ -18,7 +15,7 @@ namespace zfooscharp
 
     public delegate void OnNetError();
 
-    public class CsharpMain : MonoBehaviour
+    public class CsharpAndLua : MonoBehaviour
     {
         public static AbstractClient netClient;
 
@@ -30,7 +27,7 @@ namespace zfooscharp
 
         private async void Start()
         {
-            Debug.Log("start cs test");
+            Debug.Log("start net init");
             // 初始化协议
             ProtocolManager.InitProtocol();
 

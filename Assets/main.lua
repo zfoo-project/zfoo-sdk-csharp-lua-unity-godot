@@ -24,6 +24,18 @@ function initProtocol()
     ProtocolManager.initProtocol()
 end
 
+function onOpen()
+    print("net open event")
+end
+
+function onClose()
+    error("net close event")
+end
+
+function onError()
+    error("net error event")
+end
+
 -------------------------------------send packet------------------------------------- 
 function send(packet)
     local byteBuffer = ByteBuffer:new()

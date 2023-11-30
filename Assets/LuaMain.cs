@@ -15,20 +15,10 @@ namespace zfoolua
     {
         private static AbstractClient netClient;
 
-        private static OnMessage _message;
-        private static OnOpen _open;
-        private static OnNetClose _close;
-        private static OnNetError _error;
-
-        public delegate void OnMessage(object packet);
-
-        public delegate void OnOpen();
-
-        public delegate void OnNetClose();
-
-        public delegate void OnNetError();
-
-
+        private static Action luaOnOpen;
+        private static Action luaOnClose;
+        private static Action luaOnError;
+        
         // -------------------------------------------------------------------------------------------------------------
         // lua
         private LuaEnv _luaEnv;
@@ -36,9 +26,6 @@ namespace zfoolua
 
         private async void Start()
         {
-            // 连接服务器
-            Connect("127.0.0.1:9000");
-
             _luaEnv = new LuaEnv();
             _luaEnv.DoString("CS.UnityEngine.Debug.Log('start lua test')");
 
@@ -55,7 +42,15 @@ namespace zfoolua
 
             var luaProtocolTestStr = File.ReadAllText("Assets/main.lua");
             _luaEnv.DoString(luaProtocolTestStr, "main");
+            var scriptEnv = _luaEnv.NewTable();
+            _luaEnv.Global.Get("onOpen", out luaOnOpen);
+            _luaEnv.Global.Get("onClose", out luaOnClose);
+            _luaEnv.Global.Get("onError", out luaOnError);
             _luaEnv.Global.Get<LuaFunction>("initProtocol").Call();
+            
+            // 连接服务器
+            Connect("127.0.0.1:9000");
+            
             _luaEnv.Global.Get<LuaFunction>("sendTest").Call();
             _luaEnv.Global.Get<LuaFunction>("asyncAskTest").Call();
         }
@@ -82,9 +77,9 @@ namespace zfoolua
                     case MessageType.Connected:
                         Debug.Log("Connected server " + netClient.ToConnectUrl());
                         // do something when connected server
-                        if (_open != null)
+                        if (luaOnOpen != null)
                         {
-                            _open();
+                            luaOnOpen();
                         }
 
                         break;
@@ -120,9 +115,9 @@ namespace zfoolua
                 netClient = null;
 
                 // do something when close
-                if (_close != null)
+                if (luaOnClose != null)
                 {
-                    _close();
+                    luaOnClose();
                 }
             }
         }
@@ -139,9 +134,9 @@ namespace zfoolua
             {
                 Debug.Log("send lua message error");
                 // do something when net error
-                if (_error != null)
+                if (luaOnError != null)
                 {
-                    _error();
+                    luaOnError();
                 }
             }
         }

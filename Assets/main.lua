@@ -1,16 +1,15 @@
 local ByteBuffer = require("zfoolua.ByteBuffer")
 local ProtocolManager = require("zfoolua.ProtocolManager")
-local SignalAttachment = require("zfoolua.attachment.SignalAttachment")
-local TcpHelloRequest = require("zfoolua.tcp.TcpHelloRequest")
+local Protocols = require("zfoolua.Protocols")
 
 function sendTest()
-    local request = TcpHelloRequest:new()
+    local request = Protocols.TcpHelloRequest:new()
     request.message = "这个是普通发送的lua消息"
     send(request)
 end
 
 function asyncAskTest()
-    local request = TcpHelloRequest:new()
+    local request = Protocols.TcpHelloRequest:new()
     request.message = "这个是异步发送的lua消息"
     local myValue = 100
     asyncAsk(request,
@@ -61,7 +60,7 @@ local signalAttachmentMap = {}
 
 function asyncAsk(packet, callback)
     local currentTime = os.clock()
-    local attachment = SignalAttachment:new();
+    local attachment = Protocols.SignalAttachment:new();
     uuid = uuid + 1
     local signalId = uuid
     -- 将浮点转为整形

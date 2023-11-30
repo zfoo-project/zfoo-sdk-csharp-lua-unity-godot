@@ -1,6 +1,6 @@
 local protocols = {}
 
-ProtocolManager = {}
+local ProtocolManager = {}
 
 -- table扩展方法，map的大小
 function table.mapSize(map)
@@ -33,66 +33,40 @@ function ProtocolManager.read(buffer)
 end
 
 function initProtocol()
-    local SignalAttachment = require("zfoolua.attachment.SignalAttachment")
-    local Message = require("zfoolua.common.Message")
-    local Error = require("zfoolua.common.Error")
-    local Heartbeat = require("zfoolua.common.Heartbeat")
-    local Ping = require("zfoolua.common.Ping")
-    local Pong = require("zfoolua.common.Pong")
-    local PairIntLong = require("zfoolua.common.PairIntLong")
-    local PairLong = require("zfoolua.common.PairLong")
-    local PairString = require("zfoolua.common.PairString")
-    local PairLS = require("zfoolua.common.PairLS")
-    local TripleLong = require("zfoolua.common.TripleLong")
-    local TripleString = require("zfoolua.common.TripleString")
-    local TripleLSS = require("zfoolua.common.TripleLSS")
-    local UdpHelloRequest = require("zfoolua.udp.UdpHelloRequest")
-    local UdpHelloResponse = require("zfoolua.udp.UdpHelloResponse")
-    local TcpHelloRequest = require("zfoolua.tcp.TcpHelloRequest")
-    local TcpHelloResponse = require("zfoolua.tcp.TcpHelloResponse")
-    local WebsocketHelloRequest = require("zfoolua.websocket.WebsocketHelloRequest")
-    local WebsocketHelloResponse = require("zfoolua.websocket.WebsocketHelloResponse")
-    local JProtobufHelloRequest = require("zfoolua.jprotobuf.JProtobufHelloRequest")
-    local JProtobufHelloResponse = require("zfoolua.jprotobuf.JProtobufHelloResponse")
-    local JsonHelloRequest = require("zfoolua.json.JsonHelloRequest")
-    local JsonHelloResponse = require("zfoolua.json.JsonHelloResponse")
-    local HttpHelloRequest = require("zfoolua.http.HttpHelloRequest")
-    local HttpHelloResponse = require("zfoolua.http.HttpHelloResponse")
-    local WebSocketPacketRequest = require("zfoolua.websocket.WebSocketPacketRequest")
-    local WebSocketObjectA = require("zfoolua.websocket.WebSocketObjectA")
-    local WebSocketObjectB = require("zfoolua.websocket.WebSocketObjectB")
-    local GatewayToProviderRequest = require("zfoolua.gateway.GatewayToProviderRequest")
-    local GatewayToProviderResponse = require("zfoolua.gateway.GatewayToProviderResponse")
-    protocols[0] = SignalAttachment
-    protocols[100] = Message
-    protocols[101] = Error
-    protocols[102] = Heartbeat
-    protocols[103] = Ping
-    protocols[104] = Pong
-    protocols[110] = PairIntLong
-    protocols[111] = PairLong
-    protocols[112] = PairString
-    protocols[113] = PairLS
-    protocols[114] = TripleLong
-    protocols[115] = TripleString
-    protocols[116] = TripleLSS
-    protocols[1200] = UdpHelloRequest
-    protocols[1201] = UdpHelloResponse
-    protocols[1300] = TcpHelloRequest
-    protocols[1301] = TcpHelloResponse
-    protocols[1400] = WebsocketHelloRequest
-    protocols[1401] = WebsocketHelloResponse
-    protocols[1500] = JProtobufHelloRequest
-    protocols[1501] = JProtobufHelloResponse
-    protocols[1600] = JsonHelloRequest
-    protocols[1601] = JsonHelloResponse
-    protocols[1700] = HttpHelloRequest
-    protocols[1701] = HttpHelloResponse
-    protocols[2070] = WebSocketPacketRequest
-    protocols[2071] = WebSocketObjectA
-    protocols[2072] = WebSocketObjectB
-    protocols[5000] = GatewayToProviderRequest
-    protocols[5001] = GatewayToProviderResponse
+    local Protocols = require("zfoolua.Protocols")
+    local ProtocolBase = require("zfoolua.ProtocolBase")
+    local ProtocolWriter = require("zfoolua.ProtocolWriter")
+    local ProtocolReader = require("zfoolua.ProtocolReader")
+    protocols[0] = Protocols.SignalAttachment
+    protocols[100] = Protocols.Message
+    protocols[101] = Protocols.Error
+    protocols[102] = Protocols.Heartbeat
+    protocols[103] = Protocols.Ping
+    protocols[104] = Protocols.Pong
+    protocols[110] = Protocols.PairIntLong
+    protocols[111] = Protocols.PairLong
+    protocols[112] = Protocols.PairString
+    protocols[113] = Protocols.PairLS
+    protocols[114] = Protocols.TripleLong
+    protocols[115] = Protocols.TripleString
+    protocols[116] = Protocols.TripleLSS
+    protocols[1200] = Protocols.UdpHelloRequest
+    protocols[1201] = Protocols.UdpHelloResponse
+    protocols[1300] = Protocols.TcpHelloRequest
+    protocols[1301] = Protocols.TcpHelloResponse
+    protocols[1400] = Protocols.WebsocketHelloRequest
+    protocols[1401] = Protocols.WebsocketHelloResponse
+    protocols[1500] = Protocols.JProtobufHelloRequest
+    protocols[1501] = Protocols.JProtobufHelloResponse
+    protocols[1600] = Protocols.JsonHelloRequest
+    protocols[1601] = Protocols.JsonHelloResponse
+    protocols[1700] = Protocols.HttpHelloRequest
+    protocols[1701] = Protocols.HttpHelloResponse
+    protocols[2070] = Protocols.WebSocketPacketRequest
+    protocols[2071] = Protocols.WebSocketObjectA
+    protocols[2072] = Protocols.WebSocketObjectB
+    protocols[5000] = Protocols.GatewayToProviderRequest
+    protocols[5001] = Protocols.GatewayToProviderResponse
 end
 
 ProtocolManager.initProtocol = initProtocol

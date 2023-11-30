@@ -18,7 +18,7 @@ namespace zfoo
 
     public delegate void OnNetError();
 
-    public class ZfooNet : MonoBehaviour
+    public class CsharpMain : MonoBehaviour
     {
         public static AbstractClient netClient;
 

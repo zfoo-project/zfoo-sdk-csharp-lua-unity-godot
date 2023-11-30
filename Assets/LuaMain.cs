@@ -57,6 +57,7 @@ namespace zfoolua
             _luaEnv.DoString(luaProtocolTestStr, "main");
             _luaEnv.Global.Get<LuaFunction>("initProtocol").Call();
             _luaEnv.Global.Get<LuaFunction>("sendTest").Call();
+            _luaEnv.Global.Get<LuaFunction>("asyncAskTest").Call();
         }
 
         public static byte[] CustomLoader(ref string filepath)
@@ -126,8 +127,6 @@ namespace zfoolua
             }
         }
 
-
-        public const int PROTOCOL_HEAD_LENGTH = 4;
 
         public static void Send(MemoryStream mm, int len)
         {

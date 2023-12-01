@@ -88,7 +88,7 @@ function sendByteBuffer(byteBuffer)
     mm.Position = 0
     mm:SetLength(0)
     mm:Write(byteBuffer:getBytes(1, length), 0, length)
-    CS.zfoolua.LuaMain.Send(mm, length)
+    CS.zfoo.CsharpAndLua.SendInLua(mm, length)
 end
 -------------------------------------asyncAsk packet------------------------------------- 
 local uuid = 0

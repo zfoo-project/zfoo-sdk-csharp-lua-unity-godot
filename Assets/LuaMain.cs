@@ -15,9 +15,10 @@ namespace zfoolua
     {
         private static AbstractClient netClient;
 
-        private static Action luaOnOpen;
-        private static Action luaOnClose;
-        private static Action luaOnError;
+        public static Action<byte[]> _lua_message;
+        public static Action _lua_open;
+        public static Action _lua_close;
+        public static Action _lua_error;
         
         // -------------------------------------------------------------------------------------------------------------
         // lua
@@ -43,9 +44,10 @@ namespace zfoolua
             var luaProtocolTestStr = File.ReadAllText("Assets/main.lua");
             _luaEnv.DoString(luaProtocolTestStr, "main");
             var scriptEnv = _luaEnv.NewTable();
-            _luaEnv.Global.Get("onOpen", out luaOnOpen);
-            _luaEnv.Global.Get("onClose", out luaOnClose);
-            _luaEnv.Global.Get("onError", out luaOnError);
+            _luaEnv.Global.Get("onOpen", out _lua_open);
+            _luaEnv.Global.Get("onClose", out _lua_close);
+            _luaEnv.Global.Get("onError", out _lua_error);
+            _luaEnv.Global.Get("onMessage", out _lua_message);
             _luaEnv.Global.Get<LuaFunction>("initProtocol").Call();
             
             // 连接服务器
@@ -77,14 +79,15 @@ namespace zfoolua
                     case MessageType.Connected:
                         Debug.Log("Connected server " + netClient.ToConnectUrl());
                         // do something when connected server
-                        if (luaOnOpen != null)
+                        if (_lua_open != null)
                         {
-                            luaOnOpen();
+                            _lua_open();
                         }
 
                         break;
                     case MessageType.Data:
                         Debug.Log("lua receiver bytes " + message.buffer.Length);
+                        _lua_message(message.buffer);
                         _luaEnv.Global.Get<LuaFunction>("receiver").Call(message.buffer);
                         break;
                     case MessageType.Disconnected:
@@ -115,9 +118,9 @@ namespace zfoolua
                 netClient = null;
 
                 // do something when close
-                if (luaOnClose != null)
+                if (_lua_close != null)
                 {
-                    luaOnClose();
+                    _lua_close();
                 }
             }
         }
@@ -134,9 +137,9 @@ namespace zfoolua
             {
                 Debug.Log("send lua message error");
                 // do something when net error
-                if (luaOnError != null)
+                if (_lua_error != null)
                 {
-                    luaOnError();
+                    _lua_error();
                 }
             }
         }

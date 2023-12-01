@@ -46,10 +46,12 @@ namespace zfoo
                 var response = await asyncAsk(myRequest) as WebsocketHelloResponse;
                 Debug.Log(JsonUtility.ToJson(response));
             }
+            
             if (Input.GetKeyDown(KeyCode.D))
             {
                 _luaEnv.Global.Get<LuaFunction>("sendTest").Call();
             }
+            
             if (Input.GetKeyDown(KeyCode.F))
             {
                 _luaEnv.Global.Get<LuaFunction>("asyncAskTest").Call();

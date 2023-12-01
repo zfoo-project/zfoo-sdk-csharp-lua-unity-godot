@@ -170,34 +170,40 @@ namespace zfoo
                     case MessageType.Connected:
                         Open();
                         break;
-                    case MessageType.Data:
-                        // 解析包的id
-                        if (protocolIdBytes == null)
-                        {
-                            protocolIdBytes = new byte[2];
-                        }
-                        protocolIdBytes[0] = message.buffer[0];
-                        protocolIdBytes[1] = message.buffer[1];
-                        if (BitConverter.IsLittleEndian)
-                        {
-                            Array.Reverse(protocolIdBytes);
-                        }
-                        var protocolId = BitConverter.ToInt16(protocolIdBytes, 0);
-                        
-                        // 这边判断哪些协议要在C#处理，哪些协议要在Lua中处理
-                        if (protocolId == 1401)
-                        {
-                            csharpMessage(message.buffer);
-                        }
-                        else
-                        {
-                            _lua_message(message.buffer);
-                        }
-                        break;
                     case MessageType.Disconnected:
                         Close();
                         break;
+                    case MessageType.Data:
+                        ProcessMessage(message.buffer);
+                        break;
                 }
+            }
+        }
+
+
+        public void ProcessMessage(byte[] buffer)
+        {
+            // 解析包的id
+            if (protocolIdBytes == null)
+            {
+                protocolIdBytes = new byte[2];
+            }
+            protocolIdBytes[0] = buffer[0];
+            protocolIdBytes[1] = buffer[1];
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(protocolIdBytes);
+            }
+            var protocolId = BitConverter.ToInt16(protocolIdBytes, 0);
+                        
+            // 这边判断哪些协议要在C#处理，哪些协议要在Lua中处理
+            if (protocolId == 1401)
+            {
+                csharpMessage(buffer);
+            }
+            else
+            {
+                _lua_message(buffer);
             }
         }
 

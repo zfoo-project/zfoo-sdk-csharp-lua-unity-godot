@@ -83,16 +83,22 @@ namespace zfoolua
                         {
                             _lua_open();
                         }
-
+                        break;
+                    case MessageType.Disconnected:
+                        Debug.Log("Net Disconnected");
+                        Close();
+                        break;
+                    case MessageType.Error:
+                        Debug.Log("Net Error");
+                        if (_lua_error != null)
+                        {
+                            _lua_error();
+                        }
                         break;
                     case MessageType.Data:
                         Debug.Log("lua receiver bytes " + message.buffer.Length);
                         _lua_message(message.buffer);
                         _luaEnv.Global.Get<LuaFunction>("receiver").Call(message.buffer);
-                        break;
-                    case MessageType.Disconnected:
-                        Debug.Log("Disconnected");
-                        Close();
                         break;
                 }
             }

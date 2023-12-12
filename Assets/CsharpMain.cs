@@ -71,7 +71,17 @@ namespace zfooscharp
                         {
                             _open();
                         }
-
+                        break;
+                    case MessageType.Disconnected:
+                        Debug.Log("Net Disconnected");
+                        Close();
+                        break;
+                    case MessageType.Error:
+                        Debug.Log("Net Error");
+                        if (_error != null)
+                        {
+                            _error();
+                        }
                         break;
                     case MessageType.Data:
                         // Debug.Log("Data: " + JsonUtils.object2String(message.packet));
@@ -108,10 +118,6 @@ namespace zfooscharp
                             }
                         }
 
-                        break;
-                    case MessageType.Disconnected:
-                        Debug.Log("Disconnected");
-                        Close();
                         break;
                 }
             }

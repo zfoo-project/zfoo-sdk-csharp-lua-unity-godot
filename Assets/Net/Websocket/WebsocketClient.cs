@@ -16,7 +16,7 @@ namespace zfoo
 
         internal void HandleOnOpen()
         {
-            ZfooNet._open();
+            receiveQueue.Enqueue(new Message(MessageType.Connected, null));
         }
 
         internal void HandleOnMessage(byte[] content)
@@ -31,12 +31,12 @@ namespace zfoo
 
         internal void HandleOnClose()
         {
-            ZfooNet._close();
+            receiveQueue.Enqueue(new Message(MessageType.Disconnected, null));
         }
 
         internal void HandleOnError()
         {
-            ZfooNet._error();
+            receiveQueue.Enqueue(new Message(MessageType.Error, null));
         }
 
 

@@ -27,7 +27,7 @@ namespace zfoo
         public static OnOpen _c_open;
         public static OnNetClose _c_close;
         public static OnNetError _c_error;
-        
+
         public async void sendPackTest()
         {
             if (Input.GetKeyDown(KeyCode.A))
@@ -37,7 +37,7 @@ namespace zfoo
                 request.message = "这个是普通发送的消息";
                 Send(request);
             }
-            
+
             if (Input.GetKeyDown(KeyCode.S))
             {
                 // 使用await语法发送一个消息
@@ -46,12 +46,12 @@ namespace zfoo
                 var response = await asyncAsk(myRequest) as WebsocketHelloResponse;
                 Debug.Log(JsonUtility.ToJson(response));
             }
-            
+
             if (Input.GetKeyDown(KeyCode.D))
             {
                 _luaEnv.Global.Get<LuaFunction>("sendTest").Call();
             }
-            
+
             if (Input.GetKeyDown(KeyCode.F))
             {
                 _luaEnv.Global.Get<LuaFunction>("asyncAskTest").Call();
@@ -68,7 +68,7 @@ namespace zfoo
             // 连接服务器
             Connect("127.0.0.1:9000");
         }
-        
+
         public void Connect(string url)
         {
             Debug.Log("开始连接服务器 url:" + url);
@@ -81,7 +81,7 @@ namespace zfoo
             netClient.Start();
         }
 
-        
+
         // ----------------------------------------------Lua--------------------------------------------------------
         // Lua
         private LuaEnv _luaEnv;
@@ -89,7 +89,7 @@ namespace zfoo
         public static Action _lua_open;
         public static Action _lua_close;
         public static Action _lua_error;
-        
+
         private void initLua()
         {
             _luaEnv = new LuaEnv();
@@ -119,13 +119,13 @@ namespace zfoo
             _luaEnv.Global.Get("onMessage", out _lua_message);
             _luaEnv.Global.Get<LuaFunction>("initProtocol").Call();
         }
-        
+
         public static void SendInLua(MemoryStream mm, int len)
         {
             byte[] bytes = new byte[len];
             mm.Position = 0;
             mm.Read(bytes, 0, len);
-            
+
             var sendSuccess = netClient.Send(bytes);
             if (!sendSuccess)
             {
@@ -137,9 +137,9 @@ namespace zfoo
                 }
             }
         }
-        
+
         // ----------------------------------------------Lua--------------------------------------------------------
-        
+
         private void initCsharp()
         {
             // 初始化C#协议
@@ -150,15 +150,14 @@ namespace zfoo
             _c_error += () => Debug.Log("csharp error event");
             _c_message += packet => Debug.Log(JsonUtility.ToJson(packet));
         }
-        
 
-        [ThreadStatic]
-        protected static byte[] protocolIdBytes;
-        
+
+        [ThreadStatic] protected static byte[] protocolIdBytes;
+
         private void Update()
         {
             sendPackTest();
-            
+
             if (netClient == null)
             {
                 return;
@@ -175,6 +174,9 @@ namespace zfoo
                     case MessageType.Disconnected:
                         Close();
                         break;
+                    case MessageType.Error:
+                        Error();
+                        break;
                     case MessageType.Data:
                         ProcessMessage(message.buffer);
                         break;
@@ -190,14 +192,16 @@ namespace zfoo
             {
                 protocolIdBytes = new byte[2];
             }
+
             protocolIdBytes[0] = buffer[0];
             protocolIdBytes[1] = buffer[1];
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(protocolIdBytes);
             }
+
             var protocolId = BitConverter.ToInt16(protocolIdBytes, 0);
-                        
+
             // 这边判断哪些协议要在C#处理，哪些协议要在Lua中处理
             if (protocolId == 1401)
             {
@@ -217,15 +221,16 @@ namespace zfoo
             {
                 _c_open();
             }
+
             if (_lua_open != null)
             {
                 _lua_open();
             }
         }
-        
+
         public void Close()
         {
-            Debug.Log("Disconnected");
+            Debug.Log("Net Disconnected");
             if (netClient != null)
             {
                 netClient.Close();
@@ -236,15 +241,29 @@ namespace zfoo
                 {
                     _c_close();
                 }
+
                 if (_lua_close != null)
                 {
                     _lua_close();
                 }
             }
         }
-        
-        
-        
+
+        public void Error()
+        {
+            Debug.Log("Net Error");
+            // do something when close
+            if (_c_error != null)
+            {
+                _c_error();
+            }
+
+            if (_lua_error != null)
+            {
+                _lua_error();
+            }
+        }
+
         public const int PROTOCOL_HEAD_LENGTH = 4;
 
         public static void Send(object packet, object attachment)

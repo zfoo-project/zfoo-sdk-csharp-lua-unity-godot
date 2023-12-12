@@ -11,7 +11,8 @@ namespace zfoo
     {
         Connected,
         Data,
-        Disconnected
+        Disconnected,
+        Error
     }
     
     

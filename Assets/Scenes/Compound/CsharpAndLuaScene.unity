@@ -261,6 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52d8778bef7cfa45b118712d570a888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  luaScript: {fileID: 4900000, guid: a36cc1c2d53841eba63553ef4a3c5f25, type: 3}
   luas:
   - {fileID: 4900000, guid: a4fd764086a04f8caf983fb3ba9089a4, type: 3}
   - {fileID: 4900000, guid: 6a68da8129594b63892d702c86ba2168, type: 3}

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -89,9 +88,15 @@ namespace zfoo
         public static Action _lua_open;
         public static Action _lua_close;
         public static Action _lua_error;
+        
+        public TextAsset luaScript;
+        public List<TextAsset> luas;
+        public static List<TextAsset> myluas;
 
         private void initLua()
         {
+            myluas = luas;
+            
             _luaEnv = new LuaEnv();
             _luaEnv.DoString("CS.UnityEngine.Debug.Log('start lua init')");
 
@@ -105,19 +110,29 @@ namespace zfoo
             _luaEnv.DoString(luaDebugBuilder.ToString());
 
             // 自定义lua加载路径
-            _luaEnv.AddLoader(delegate(ref string filepath)
-            {
-                filepath = filepath.Replace(".", "/") + ".lua";
-                return File.ReadAllBytes("Assets/" + filepath);
-            });
+            _luaEnv.AddLoader(CustomLoader);
 
-            var luaProtocolTestStr = File.ReadAllText("Assets/Scenes/Compound/csharp_and_lua_main.lua");
-            _luaEnv.DoString(luaProtocolTestStr, "main");
+            _luaEnv.DoString(luaScript.text, "main");
             _luaEnv.Global.Get("onOpen", out _lua_open);
             _luaEnv.Global.Get("onClose", out _lua_close);
             _luaEnv.Global.Get("onError", out _lua_error);
             _luaEnv.Global.Get("onMessage", out _lua_message);
             _luaEnv.Global.Get<LuaFunction>("initProtocol").Call();
+        }
+        
+        public static byte[] CustomLoader(ref string filepath)
+        {
+            filepath = filepath.Replace(".", "/") + ".lua.txt";
+            foreach (var lua in myluas)
+            {
+                if (filepath.Contains(lua.name))
+                {
+                    return lua.bytes;
+                }
+            }
+
+            Debug.LogError("lua load error  ");
+            return null;
         }
 
         public static void SendInLua(MemoryStream mm, int len)

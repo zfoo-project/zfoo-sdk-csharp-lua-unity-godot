@@ -1,25 +1,13 @@
 using System;
 using System.Collections.Generic;
-
 namespace zfoocs
 {
     
     public class Error
     {
-        public int module;
-        public int errorCode;
-        public string errorMessage;
-
-        public static Error ValueOf(int errorCode, string errorMessage, int module)
-        {
-            var packet = new Error();
-            packet.errorCode = errorCode;
-            packet.errorMessage = errorMessage;
-            packet.module = module;
-            return packet;
-        }
+        public int code;
+        public string message;
     }
-
 
     public class ErrorRegistration : IProtocolRegistration
     {
@@ -27,7 +15,7 @@ namespace zfoocs
         {
             return 101;
         }
-
+    
         public void Write(ByteBuffer buffer, object packet)
         {
             if (packet == null)
@@ -37,11 +25,10 @@ namespace zfoocs
             }
             Error message = (Error) packet;
             buffer.WriteInt(-1);
-            buffer.WriteInt(message.errorCode);
-            buffer.WriteString(message.errorMessage);
-            buffer.WriteInt(message.module);
+            buffer.WriteInt(message.code);
+            buffer.WriteString(message.message);
         }
-
+    
         public object Read(ByteBuffer buffer)
         {
             int length = buffer.ReadInt();
@@ -49,15 +36,14 @@ namespace zfoocs
             {
                 return null;
             }
-            int beforeReadIndex = buffer.ReadOffset();
+            int beforeReadIndex = buffer.GetReadOffset();
             Error packet = new Error();
             int result0 = buffer.ReadInt();
-            packet.errorCode = result0;
+            packet.code = result0;
             string result1 = buffer.ReadString();
-            packet.errorMessage = result1;
-            int result2 = buffer.ReadInt();
-            packet.module = result2;
-            if (length > 0) {
+            packet.message = result1;
+            if (length > 0)
+            {
                 buffer.SetReadOffset(beforeReadIndex + length);
             }
             return packet;

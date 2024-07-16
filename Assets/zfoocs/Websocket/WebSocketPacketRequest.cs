@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 namespace zfoocs
 {
     
@@ -46,54 +45,7 @@ namespace zfoocs
         public HashSet<HashSet<WebSocketObjectA>> sss;
         public HashSet<string> ssss;
         public HashSet<Dictionary<int, string>> sssss;
-
-        public static WebSocketPacketRequest ValueOf(byte a, byte aa, byte[] aaa, byte[] aaaa, short b, short bb, short[] bbb, short[] bbbb, int c, int cc, int[] ccc, int[] cccc, long d, long[] dd, float e, float ee, float[] eee, float[] eeee, double f, double ff, double[] fff, double[] ffff, string jj, string[] jjj, WebSocketObjectA kk, WebSocketObjectA[] kkk, List<int> l, List<List<List<int>>> ll, List<List<WebSocketObjectA>> lll, List<string> llll, List<Dictionary<int, string>> lllll, Dictionary<int, string> m, Dictionary<int, WebSocketObjectA> mm, Dictionary<WebSocketObjectA, List<int>> mmm, Dictionary<List<List<WebSocketObjectA>>, List<List<List<int>>>> mmmm, HashSet<int> s, HashSet<HashSet<List<int>>> ss, HashSet<HashSet<WebSocketObjectA>> sss, HashSet<string> ssss, HashSet<Dictionary<int, string>> sssss)
-        {
-            var packet = new WebSocketPacketRequest();
-            packet.a = a;
-            packet.aa = aa;
-            packet.aaa = aaa;
-            packet.aaaa = aaaa;
-            packet.b = b;
-            packet.bb = bb;
-            packet.bbb = bbb;
-            packet.bbbb = bbbb;
-            packet.c = c;
-            packet.cc = cc;
-            packet.ccc = ccc;
-            packet.cccc = cccc;
-            packet.d = d;
-            packet.dd = dd;
-            packet.e = e;
-            packet.ee = ee;
-            packet.eee = eee;
-            packet.eeee = eeee;
-            packet.f = f;
-            packet.ff = ff;
-            packet.fff = fff;
-            packet.ffff = ffff;
-            packet.jj = jj;
-            packet.jjj = jjj;
-            packet.kk = kk;
-            packet.kkk = kkk;
-            packet.l = l;
-            packet.ll = ll;
-            packet.lll = lll;
-            packet.llll = llll;
-            packet.lllll = lllll;
-            packet.m = m;
-            packet.mm = mm;
-            packet.mmm = mmm;
-            packet.mmmm = mmmm;
-            packet.s = s;
-            packet.ss = ss;
-            packet.sss = sss;
-            packet.ssss = ssss;
-            packet.sssss = sssss;
-            return packet;
-        }
     }
-
 
     public class WebSocketPacketRequestRegistration : IProtocolRegistration
     {
@@ -101,7 +53,7 @@ namespace zfoocs
         {
             return 2070;
         }
-
+    
         public void Write(ByteBuffer buffer, object packet)
         {
             if (packet == null)
@@ -315,7 +267,7 @@ namespace zfoocs
                 }
             }
         }
-
+    
         public object Read(ByteBuffer buffer)
         {
             int length = buffer.ReadInt();
@@ -323,208 +275,209 @@ namespace zfoocs
             {
                 return null;
             }
-            int beforeReadIndex = buffer.ReadOffset();
+            int beforeReadIndex = buffer.GetReadOffset();
             WebSocketPacketRequest packet = new WebSocketPacketRequest();
-            byte result31 = buffer.ReadByte();
-            packet.a = result31;
-            byte result32 = buffer.ReadByte();
-            packet.aa = result32;
-            var array33 = buffer.ReadByteArray();
-            packet.aaa = array33;
-            var array34 = buffer.ReadByteArray();
-            packet.aaaa = array34;
-            short result35 = buffer.ReadShort();
-            packet.b = result35;
-            short result36 = buffer.ReadShort();
-            packet.bb = result36;
-            var array37 = buffer.ReadShortArray();
-            packet.bbb = array37;
-            var array38 = buffer.ReadShortArray();
-            packet.bbbb = array38;
-            int result39 = buffer.ReadInt();
-            packet.c = result39;
-            int result40 = buffer.ReadInt();
-            packet.cc = result40;
-            var array41 = buffer.ReadIntArray();
-            packet.ccc = array41;
-            var array42 = buffer.ReadIntArray();
-            packet.cccc = array42;
-            long result43 = buffer.ReadLong();
-            packet.d = result43;
-            var array44 = buffer.ReadLongArray();
-            packet.dd = array44;
-            float result45 = buffer.ReadFloat();
-            packet.e = result45;
-            float result46 = buffer.ReadFloat();
-            packet.ee = result46;
-            var array47 = buffer.ReadFloatArray();
-            packet.eee = array47;
-            var array48 = buffer.ReadFloatArray();
-            packet.eeee = array48;
-            double result49 = buffer.ReadDouble();
-            packet.f = result49;
-            double result50 = buffer.ReadDouble();
-            packet.ff = result50;
-            var array51 = buffer.ReadDoubleArray();
-            packet.fff = array51;
-            var array52 = buffer.ReadDoubleArray();
-            packet.ffff = array52;
-            string result53 = buffer.ReadString();
-            packet.jj = result53;
-            var array54 = buffer.ReadStringArray();
-            packet.jjj = array54;
-            WebSocketObjectA result55 = buffer.ReadPacket<WebSocketObjectA>(2071);
-            packet.kk = result55;
-            var array56 = buffer.ReadPacketArray<WebSocketObjectA>(2071);
-            packet.kkk = array56;
-            var list57 = buffer.ReadIntList();
-            packet.l = list57;
-            int size60 = buffer.ReadInt();
-            var result58 = new List<List<List<int>>>(size60);
-            if (size60 > 0)
+            byte result0 = buffer.ReadByte();
+            packet.a = result0;
+            byte result1 = buffer.ReadByte();
+            packet.aa = result1;
+            var array2 = buffer.ReadByteArray();
+            packet.aaa = array2;
+            var array3 = buffer.ReadByteArray();
+            packet.aaaa = array3;
+            short result4 = buffer.ReadShort();
+            packet.b = result4;
+            short result5 = buffer.ReadShort();
+            packet.bb = result5;
+            var array6 = buffer.ReadShortArray();
+            packet.bbb = array6;
+            var array7 = buffer.ReadShortArray();
+            packet.bbbb = array7;
+            int result8 = buffer.ReadInt();
+            packet.c = result8;
+            int result9 = buffer.ReadInt();
+            packet.cc = result9;
+            var array10 = buffer.ReadIntArray();
+            packet.ccc = array10;
+            var array11 = buffer.ReadIntArray();
+            packet.cccc = array11;
+            long result12 = buffer.ReadLong();
+            packet.d = result12;
+            var array13 = buffer.ReadLongArray();
+            packet.dd = array13;
+            float result14 = buffer.ReadFloat();
+            packet.e = result14;
+            float result15 = buffer.ReadFloat();
+            packet.ee = result15;
+            var array16 = buffer.ReadFloatArray();
+            packet.eee = array16;
+            var array17 = buffer.ReadFloatArray();
+            packet.eeee = array17;
+            double result18 = buffer.ReadDouble();
+            packet.f = result18;
+            double result19 = buffer.ReadDouble();
+            packet.ff = result19;
+            var array20 = buffer.ReadDoubleArray();
+            packet.fff = array20;
+            var array21 = buffer.ReadDoubleArray();
+            packet.ffff = array21;
+            string result22 = buffer.ReadString();
+            packet.jj = result22;
+            var array23 = buffer.ReadStringArray();
+            packet.jjj = array23;
+            WebSocketObjectA result24 = buffer.ReadPacket<WebSocketObjectA>(2071);
+            packet.kk = result24;
+            var array25 = buffer.ReadPacketArray<WebSocketObjectA>(2071);
+            packet.kkk = array25;
+            var list26 = buffer.ReadIntList();
+            packet.l = list26;
+            int size29 = buffer.ReadInt();
+            var result27 = new List<List<List<int>>>(size29);
+            if (size29 > 0)
             {
-                for (int index59 = 0; index59 < size60; index59++)
+                for (int index28 = 0; index28 < size29; index28++)
                 {
-                    int size63 = buffer.ReadInt();
-                    var result61 = new List<List<int>>(size63);
-                    if (size63 > 0)
+                    int size32 = buffer.ReadInt();
+                    var result30 = new List<List<int>>(size32);
+                    if (size32 > 0)
                     {
-                        for (int index62 = 0; index62 < size63; index62++)
+                        for (int index31 = 0; index31 < size32; index31++)
                         {
-                            var list64 = buffer.ReadIntList();
-                            result61.Add(list64);
+                            var list33 = buffer.ReadIntList();
+                            result30.Add(list33);
                         }
                     }
-                    result58.Add(result61);
+                    result27.Add(result30);
                 }
             }
-            packet.ll = result58;
+            packet.ll = result27;
+            int size36 = buffer.ReadInt();
+            var result34 = new List<List<WebSocketObjectA>>(size36);
+            if (size36 > 0)
+            {
+                for (int index35 = 0; index35 < size36; index35++)
+                {
+                    var list37 = buffer.ReadPacketList<WebSocketObjectA>(2071);
+                    result34.Add(list37);
+                }
+            }
+            packet.lll = result34;
+            var list38 = buffer.ReadStringList();
+            packet.llll = list38;
+            int size41 = buffer.ReadInt();
+            var result39 = new List<Dictionary<int, string>>(size41);
+            if (size41 > 0)
+            {
+                for (int index40 = 0; index40 < size41; index40++)
+                {
+                    var map42 = buffer.ReadIntStringMap();
+                    result39.Add(map42);
+                }
+            }
+            packet.lllll = result39;
+            var map43 = buffer.ReadIntStringMap();
+            packet.m = map43;
+            var map44 = buffer.ReadIntPacketMap<WebSocketObjectA>(2071);
+            packet.mm = map44;
+            int size46 = buffer.ReadInt();
+            var result45 = new Dictionary<WebSocketObjectA, List<int>>(size46);
+            if (size46 > 0)
+            {
+                for (var index47 = 0; index47 < size46; index47++)
+                {
+                    WebSocketObjectA result48 = buffer.ReadPacket<WebSocketObjectA>(2071);
+                    var list49 = buffer.ReadIntList();
+                    result45[result48] = list49;
+                }
+            }
+            packet.mmm = result45;
+            int size51 = buffer.ReadInt();
+            var result50 = new Dictionary<List<List<WebSocketObjectA>>, List<List<List<int>>>>(size51);
+            if (size51 > 0)
+            {
+                for (var index52 = 0; index52 < size51; index52++)
+                {
+                    int size55 = buffer.ReadInt();
+                    var result53 = new List<List<WebSocketObjectA>>(size55);
+                    if (size55 > 0)
+                    {
+                        for (int index54 = 0; index54 < size55; index54++)
+                        {
+                            var list56 = buffer.ReadPacketList<WebSocketObjectA>(2071);
+                            result53.Add(list56);
+                        }
+                    }
+                    int size59 = buffer.ReadInt();
+                    var result57 = new List<List<List<int>>>(size59);
+                    if (size59 > 0)
+                    {
+                        for (int index58 = 0; index58 < size59; index58++)
+                        {
+                            int size62 = buffer.ReadInt();
+                            var result60 = new List<List<int>>(size62);
+                            if (size62 > 0)
+                            {
+                                for (int index61 = 0; index61 < size62; index61++)
+                                {
+                                    var list63 = buffer.ReadIntList();
+                                    result60.Add(list63);
+                                }
+                            }
+                            result57.Add(result60);
+                        }
+                    }
+                    result50[result53] = result57;
+                }
+            }
+            packet.mmmm = result50;
+            var set64 = buffer.ReadIntSet();
+            packet.s = set64;
             int size67 = buffer.ReadInt();
-            var result65 = new List<List<WebSocketObjectA>>(size67);
+            var result65 = new HashSet<HashSet<List<int>>>();
             if (size67 > 0)
             {
                 for (int index66 = 0; index66 < size67; index66++)
                 {
-                    var list68 = buffer.ReadPacketList<WebSocketObjectA>(2071);
-                    result65.Add(list68);
-                }
-            }
-            packet.lll = result65;
-            var list69 = buffer.ReadStringList();
-            packet.llll = list69;
-            int size72 = buffer.ReadInt();
-            var result70 = new List<Dictionary<int, string>>(size72);
-            if (size72 > 0)
-            {
-                for (int index71 = 0; index71 < size72; index71++)
-                {
-                    var map73 = buffer.ReadIntStringMap();
-                    result70.Add(map73);
-                }
-            }
-            packet.lllll = result70;
-            var map74 = buffer.ReadIntStringMap();
-            packet.m = map74;
-            var map75 = buffer.ReadIntPacketMap<WebSocketObjectA>(2071);
-            packet.mm = map75;
-            int size77 = buffer.ReadInt();
-            var result76 = new Dictionary<WebSocketObjectA, List<int>>(size77);
-            if (size77 > 0)
-            {
-                for (var index78 = 0; index78 < size77; index78++)
-                {
-                    WebSocketObjectA result79 = buffer.ReadPacket<WebSocketObjectA>(2071);
-                    var list80 = buffer.ReadIntList();
-                    result76[result79] = list80;
-                }
-            }
-            packet.mmm = result76;
-            int size82 = buffer.ReadInt();
-            var result81 = new Dictionary<List<List<WebSocketObjectA>>, List<List<List<int>>>>(size82);
-            if (size82 > 0)
-            {
-                for (var index83 = 0; index83 < size82; index83++)
-                {
-                    int size86 = buffer.ReadInt();
-                    var result84 = new List<List<WebSocketObjectA>>(size86);
-                    if (size86 > 0)
+                    int size70 = buffer.ReadInt();
+                    var result68 = new HashSet<List<int>>();
+                    if (size70 > 0)
                     {
-                        for (int index85 = 0; index85 < size86; index85++)
+                        for (int index69 = 0; index69 < size70; index69++)
                         {
-                            var list87 = buffer.ReadPacketList<WebSocketObjectA>(2071);
-                            result84.Add(list87);
+                            var list71 = buffer.ReadIntList();
+                            result68.Add(list71);
                         }
                     }
-                    int size90 = buffer.ReadInt();
-                    var result88 = new List<List<List<int>>>(size90);
-                    if (size90 > 0)
-                    {
-                        for (int index89 = 0; index89 < size90; index89++)
-                        {
-                            int size93 = buffer.ReadInt();
-                            var result91 = new List<List<int>>(size93);
-                            if (size93 > 0)
-                            {
-                                for (int index92 = 0; index92 < size93; index92++)
-                                {
-                                    var list94 = buffer.ReadIntList();
-                                    result91.Add(list94);
-                                }
-                            }
-                            result88.Add(result91);
-                        }
-                    }
-                    result81[result84] = result88;
+                    result65.Add(result68);
                 }
             }
-            packet.mmmm = result81;
-            var set95 = buffer.ReadIntSet();
-            packet.s = set95;
-            int size98 = buffer.ReadInt();
-            var result96 = new HashSet<HashSet<List<int>>>();
-            if (size98 > 0)
+            packet.ss = result65;
+            int size74 = buffer.ReadInt();
+            var result72 = new HashSet<HashSet<WebSocketObjectA>>();
+            if (size74 > 0)
             {
-                for (int index97 = 0; index97 < size98; index97++)
+                for (int index73 = 0; index73 < size74; index73++)
                 {
-                    int size101 = buffer.ReadInt();
-                    var result99 = new HashSet<List<int>>();
-                    if (size101 > 0)
-                    {
-                        for (int index100 = 0; index100 < size101; index100++)
-                        {
-                            var list102 = buffer.ReadIntList();
-                            result99.Add(list102);
-                        }
-                    }
-                    result96.Add(result99);
+                    var set75 = buffer.ReadPacketSet<WebSocketObjectA>(2071);
+                    result72.Add(set75);
                 }
             }
-            packet.ss = result96;
-            int size105 = buffer.ReadInt();
-            var result103 = new HashSet<HashSet<WebSocketObjectA>>();
-            if (size105 > 0)
+            packet.sss = result72;
+            var set76 = buffer.ReadStringSet();
+            packet.ssss = set76;
+            int size79 = buffer.ReadInt();
+            var result77 = new HashSet<Dictionary<int, string>>();
+            if (size79 > 0)
             {
-                for (int index104 = 0; index104 < size105; index104++)
+                for (int index78 = 0; index78 < size79; index78++)
                 {
-                    var set106 = buffer.ReadPacketSet<WebSocketObjectA>(2071);
-                    result103.Add(set106);
+                    var map80 = buffer.ReadIntStringMap();
+                    result77.Add(map80);
                 }
             }
-            packet.sss = result103;
-            var set107 = buffer.ReadStringSet();
-            packet.ssss = set107;
-            int size110 = buffer.ReadInt();
-            var result108 = new HashSet<Dictionary<int, string>>();
-            if (size110 > 0)
+            packet.sssss = result77;
+            if (length > 0)
             {
-                for (int index109 = 0; index109 < size110; index109++)
-                {
-                    var map111 = buffer.ReadIntStringMap();
-                    result108.Add(map111);
-                }
-            }
-            packet.sssss = result108;
-            if (length > 0) {
                 buffer.SetReadOffset(beforeReadIndex + length);
             }
             return packet;

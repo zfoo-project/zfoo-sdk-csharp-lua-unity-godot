@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 namespace zfoocs
 {
     
@@ -11,18 +10,7 @@ namespace zfoocs
         // 0 for the server, 1 or 2 for the sync or async native client, 12 for the outside client such as browser, mobile
         public byte client;
         public long timestamp;
-
-        public static SignalAttachment ValueOf(byte client, int signalId, int taskExecutorHash, long timestamp)
-        {
-            var packet = new SignalAttachment();
-            packet.client = client;
-            packet.signalId = signalId;
-            packet.taskExecutorHash = taskExecutorHash;
-            packet.timestamp = timestamp;
-            return packet;
-        }
     }
-
 
     public class SignalAttachmentRegistration : IProtocolRegistration
     {
@@ -30,7 +18,7 @@ namespace zfoocs
         {
             return 0;
         }
-
+    
         public void Write(ByteBuffer buffer, object packet)
         {
             if (packet == null)
@@ -45,7 +33,7 @@ namespace zfoocs
             buffer.WriteInt(message.taskExecutorHash);
             buffer.WriteLong(message.timestamp);
         }
-
+    
         public object Read(ByteBuffer buffer)
         {
             int length = buffer.ReadInt();
@@ -53,7 +41,7 @@ namespace zfoocs
             {
                 return null;
             }
-            int beforeReadIndex = buffer.ReadOffset();
+            int beforeReadIndex = buffer.GetReadOffset();
             SignalAttachment packet = new SignalAttachment();
             byte result0 = buffer.ReadByte();
             packet.client = result0;
@@ -63,7 +51,8 @@ namespace zfoocs
             packet.taskExecutorHash = result2;
             long result3 = buffer.ReadLong();
             packet.timestamp = result3;
-            if (length > 0) {
+            if (length > 0)
+            {
                 buffer.SetReadOffset(beforeReadIndex + length);
             }
             return packet;

@@ -176,7 +176,7 @@ namespace zfooscharp
                 }
 
                 // 包的长度
-                int length = byteBuffer.WriteOffset();
+                int length = byteBuffer.GetWriteOffset();
 
                 int packetLength = length - PROTOCOL_HEAD_LENGTH;
 

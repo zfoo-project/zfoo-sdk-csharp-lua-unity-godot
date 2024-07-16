@@ -67,9 +67,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -167,16 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac34da91715b439e93eeca0745dfeb5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  luaScript: {fileID: 4900000, guid: 4e458e72ae3e4ea7b3fc68a9f682e83f, type: 3}
-  luas:
-  - {fileID: 4900000, guid: a4fd764086a04f8caf983fb3ba9089a4, type: 3}
-  - {fileID: 4900000, guid: 6a68da8129594b63892d702c86ba2168, type: 3}
-  - {fileID: 4900000, guid: 599acdfa7227b9a4a929507680a213da, type: 3}
-  - {fileID: 4900000, guid: a382455cceb044b2a518759261949344, type: 3}
-  - {fileID: 4900000, guid: 36434bc3da4a6c54ab25a9a3649c0aad, type: 3}
-  - {fileID: 4900000, guid: 9e1b51362b28927439c5e61b24affb09, type: 3}
-  - {fileID: 4900000, guid: 84742934967df024ba40b1dee97a8bae, type: 3}
-  - {fileID: 4900000, guid: 4e458e72ae3e4ea7b3fc68a9f682e83f, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

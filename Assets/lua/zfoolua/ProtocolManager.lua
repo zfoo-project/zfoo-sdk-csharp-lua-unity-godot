@@ -14,7 +14,7 @@ end
 function ProtocolManager.getProtocol(protocolId)
     local protocol = protocols[protocolId]
     if protocol == nil then
-        error("[protocolId:" + protocolId + "]协议不存在")
+        error("[protocolId:" + protocolId + "] not exist")
     end
     return protocol
 end
@@ -32,11 +32,8 @@ function ProtocolManager.read(buffer)
     return ProtocolManager.getProtocol(protocolId):read(buffer)
 end
 
-function initProtocol()
+function ProtocolManager.initProtocol()
     local Protocols = require("zfoolua.Protocols")
-    local ProtocolBase = require("zfoolua.ProtocolBase")
-    local ProtocolWriter = require("zfoolua.ProtocolWriter")
-    local ProtocolReader = require("zfoolua.ProtocolReader")
     protocols[0] = Protocols.SignalAttachment
     protocols[100] = Protocols.Message
     protocols[101] = Protocols.Error
@@ -56,8 +53,6 @@ function initProtocol()
     protocols[1301] = Protocols.TcpHelloResponse
     protocols[1400] = Protocols.WebsocketHelloRequest
     protocols[1401] = Protocols.WebsocketHelloResponse
-    protocols[1500] = Protocols.JProtobufHelloRequest
-    protocols[1501] = Protocols.JProtobufHelloResponse
     protocols[1600] = Protocols.JsonHelloRequest
     protocols[1601] = Protocols.JsonHelloResponse
     protocols[1700] = Protocols.HttpHelloRequest
@@ -69,5 +64,4 @@ function initProtocol()
     protocols[5001] = Protocols.GatewayToProviderResponse
 end
 
-ProtocolManager.initProtocol = initProtocol
 return ProtocolManager

@@ -10,10 +10,16 @@ namespace zfoocs
 
         private static readonly IProtocolRegistration[] protocols = new IProtocolRegistration[MAX_PROTOCOL_NUM];
         private static readonly Dictionary<Type, short> protocolIdMap = new Dictionary<Type, short>();
+        private static bool initialized = false;
 
 
         public static void InitProtocol()
         {
+            if (initialized)
+            {
+                return;
+            }
+            initialized = true;
             protocols[0] = new SignalAttachmentRegistration();
             protocolIdMap[typeof(SignalAttachment)] = 0;
             protocols[100] = new MessageRegistration();
@@ -52,10 +58,6 @@ namespace zfoocs
             protocolIdMap[typeof(WebsocketHelloRequest)] = 1400;
             protocols[1401] = new WebsocketHelloResponseRegistration();
             protocolIdMap[typeof(WebsocketHelloResponse)] = 1401;
-            protocols[1500] = new JProtobufHelloRequestRegistration();
-            protocolIdMap[typeof(JProtobufHelloRequest)] = 1500;
-            protocols[1501] = new JProtobufHelloResponseRegistration();
-            protocolIdMap[typeof(JProtobufHelloResponse)] = 1501;
             protocols[1600] = new JsonHelloRequestRegistration();
             protocolIdMap[typeof(JsonHelloRequest)] = 1600;
             protocols[1601] = new JsonHelloResponseRegistration();
@@ -76,6 +78,11 @@ namespace zfoocs
             protocolIdMap[typeof(GatewayToProviderResponse)] = 5001;
         }
 
+        public static short GetProtocolId(Type type)
+        {
+            return protocolIdMap[type];
+        }
+
         public static IProtocolRegistration GetProtocol(short protocolId)
         {
             var protocol = protocols[protocolId];
@@ -83,17 +90,15 @@ namespace zfoocs
             {
                 throw new Exception("[protocolId:" + protocolId + "] not exist");
             }
-
             return protocol;
         }
 
         public static void Write(ByteBuffer buffer, object packet)
         {
             var protocolId = protocolIdMap[packet.GetType()];
-            // 写入协议号
+            // write protocol id to buffer
             buffer.WriteShort(protocolId);
-
-            // 写入包体
+            // write packet
             GetProtocol(protocolId).Write(buffer, packet);
         }
 

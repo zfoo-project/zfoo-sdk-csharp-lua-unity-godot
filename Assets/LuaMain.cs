@@ -25,14 +25,8 @@ namespace zfoolua
         // lua
         private LuaEnv _luaEnv;
 
-        public TextAsset luaScript;
-        public List<TextAsset> luas;
-        public static List<TextAsset> myluas;
-        
         private async void Start()
         {
-            myluas = luas;
-            
             _luaEnv = new LuaEnv();
             _luaEnv.DoString("CS.UnityEngine.Debug.Log('start lua test')");
 
@@ -47,7 +41,10 @@ namespace zfoolua
 
             _luaEnv.AddLoader(CustomLoader);
 
-            _luaEnv.DoString(luaScript.text, "main");
+            
+            var luaProtocolTestStr = File.ReadAllText( "Assets/lua/main.lua");
+            _luaEnv.DoString(luaProtocolTestStr, "main");
+            
             _luaEnv.Global.Get("onOpen", out _lua_open);
             _luaEnv.Global.Get("onClose", out _lua_close);
             _luaEnv.Global.Get("onError", out _lua_error);
@@ -63,17 +60,8 @@ namespace zfoolua
 
         public static byte[] CustomLoader(ref string filepath)
         {
-            filepath = filepath.Replace(".", "/") + ".lua.txt";
-            foreach (var lua in myluas)
-            {
-                if (filepath.Contains(lua.name))
-                {
-                    return lua.bytes;
-                }
-            }
-
-            Debug.LogError("lua load error  ");
-            return null;
+            filepath = filepath.Replace(".", "/") + ".lua";
+            return File.ReadAllBytes("Assets/lua/" + filepath);
         }
 
         private void Update()
@@ -110,7 +98,6 @@ namespace zfoolua
                     case MessageType.Data:
                         Debug.Log("lua receiver bytes " + message.buffer.Length);
                         _lua_message(message.buffer);
-                        _luaEnv.Global.Get<LuaFunction>("onMessage").Call(message.buffer);
                         break;
                 }
             }

@@ -43,7 +43,7 @@ function onMessage(bytes)
     local byteBuffer = ByteBuffer:new()
     byteBuffer:writeBuffer(bytes)
     local packet = ProtocolManager.read(byteBuffer)
-    if byteBuffer:isReadable() and byteBuffer:readBoolean() then
+    if byteBuffer:isReadable() and byteBuffer:readBool() then
         local attachment = ProtocolManager.read(byteBuffer)
         local signalId = attachment.signalId
         local encodedPacketInfo = signalAttachmentMap[signalId]
@@ -72,7 +72,7 @@ function sendWithAttachment(packet, attachment)
     local byteBuffer = ByteBuffer:new()
     byteBuffer:writeRawInt(4)
     ProtocolManager.write(byteBuffer, packet)
-    byteBuffer:writeBoolean(true)
+    byteBuffer:writeBool(true)
     ProtocolManager.write(byteBuffer, attachment)
     sendByteBuffer(byteBuffer)
 end

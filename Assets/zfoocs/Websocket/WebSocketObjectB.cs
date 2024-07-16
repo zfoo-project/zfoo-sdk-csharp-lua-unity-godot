@@ -1,21 +1,12 @@
 using System;
 using System.Collections.Generic;
-
 namespace zfoocs
 {
     
     public class WebSocketObjectB
     {
         public bool flag;
-
-        public static WebSocketObjectB ValueOf(bool flag)
-        {
-            var packet = new WebSocketObjectB();
-            packet.flag = flag;
-            return packet;
-        }
     }
-
 
     public class WebSocketObjectBRegistration : IProtocolRegistration
     {
@@ -23,7 +14,7 @@ namespace zfoocs
         {
             return 2072;
         }
-
+    
         public void Write(ByteBuffer buffer, object packet)
         {
             if (packet == null)
@@ -35,7 +26,7 @@ namespace zfoocs
             buffer.WriteInt(-1);
             buffer.WriteBool(message.flag);
         }
-
+    
         public object Read(ByteBuffer buffer)
         {
             int length = buffer.ReadInt();
@@ -43,11 +34,12 @@ namespace zfoocs
             {
                 return null;
             }
-            int beforeReadIndex = buffer.ReadOffset();
+            int beforeReadIndex = buffer.GetReadOffset();
             WebSocketObjectB packet = new WebSocketObjectB();
             bool result0 = buffer.ReadBool();
             packet.flag = result0;
-            if (length > 0) {
+            if (length > 0)
+            {
                 buffer.SetReadOffset(beforeReadIndex + length);
             }
             return packet;

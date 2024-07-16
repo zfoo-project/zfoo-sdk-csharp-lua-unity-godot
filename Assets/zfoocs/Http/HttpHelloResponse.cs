@@ -1,21 +1,12 @@
 using System;
 using System.Collections.Generic;
-
 namespace zfoocs
 {
     
     public class HttpHelloResponse
     {
         public string message;
-
-        public static HttpHelloResponse ValueOf(string message)
-        {
-            var packet = new HttpHelloResponse();
-            packet.message = message;
-            return packet;
-        }
     }
-
 
     public class HttpHelloResponseRegistration : IProtocolRegistration
     {
@@ -23,7 +14,7 @@ namespace zfoocs
         {
             return 1701;
         }
-
+    
         public void Write(ByteBuffer buffer, object packet)
         {
             if (packet == null)
@@ -35,7 +26,7 @@ namespace zfoocs
             buffer.WriteInt(-1);
             buffer.WriteString(message.message);
         }
-
+    
         public object Read(ByteBuffer buffer)
         {
             int length = buffer.ReadInt();
@@ -43,11 +34,12 @@ namespace zfoocs
             {
                 return null;
             }
-            int beforeReadIndex = buffer.ReadOffset();
+            int beforeReadIndex = buffer.GetReadOffset();
             HttpHelloResponse packet = new HttpHelloResponse();
             string result0 = buffer.ReadString();
             packet.message = result0;
-            if (length > 0) {
+            if (length > 0)
+            {
                 buffer.SetReadOffset(beforeReadIndex + length);
             }
             return packet;

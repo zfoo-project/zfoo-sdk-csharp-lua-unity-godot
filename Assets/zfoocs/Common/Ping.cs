@@ -1,21 +1,12 @@
 using System;
 using System.Collections.Generic;
-
 namespace zfoocs
 {
     
     public class Ping
     {
         
-
-        public static Ping ValueOf()
-        {
-            var packet = new Ping();
-            
-            return packet;
-        }
     }
-
 
     public class PingRegistration : IProtocolRegistration
     {
@@ -23,7 +14,7 @@ namespace zfoocs
         {
             return 103;
         }
-
+    
         public void Write(ByteBuffer buffer, object packet)
         {
             if (packet == null)
@@ -34,7 +25,7 @@ namespace zfoocs
             Ping message = (Ping) packet;
             buffer.WriteInt(-1);
         }
-
+    
         public object Read(ByteBuffer buffer)
         {
             int length = buffer.ReadInt();
@@ -42,10 +33,11 @@ namespace zfoocs
             {
                 return null;
             }
-            int beforeReadIndex = buffer.ReadOffset();
+            int beforeReadIndex = buffer.GetReadOffset();
             Ping packet = new Ping();
             
-            if (length > 0) {
+            if (length > 0)
+            {
                 buffer.SetReadOffset(beforeReadIndex + length);
             }
             return packet;

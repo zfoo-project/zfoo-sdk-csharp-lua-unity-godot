@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 namespace zfoocs
 {
     
@@ -9,17 +8,7 @@ namespace zfoocs
         public long left;
         public string middle;
         public string right;
-
-        public static TripleLSS ValueOf(long left, string middle, string right)
-        {
-            var packet = new TripleLSS();
-            packet.left = left;
-            packet.middle = middle;
-            packet.right = right;
-            return packet;
-        }
     }
-
 
     public class TripleLSSRegistration : IProtocolRegistration
     {
@@ -27,7 +16,7 @@ namespace zfoocs
         {
             return 116;
         }
-
+    
         public void Write(ByteBuffer buffer, object packet)
         {
             if (packet == null)
@@ -41,7 +30,7 @@ namespace zfoocs
             buffer.WriteString(message.middle);
             buffer.WriteString(message.right);
         }
-
+    
         public object Read(ByteBuffer buffer)
         {
             int length = buffer.ReadInt();
@@ -49,7 +38,7 @@ namespace zfoocs
             {
                 return null;
             }
-            int beforeReadIndex = buffer.ReadOffset();
+            int beforeReadIndex = buffer.GetReadOffset();
             TripleLSS packet = new TripleLSS();
             long result0 = buffer.ReadLong();
             packet.left = result0;
@@ -57,7 +46,8 @@ namespace zfoocs
             packet.middle = result1;
             string result2 = buffer.ReadString();
             packet.right = result2;
-            if (length > 0) {
+            if (length > 0)
+            {
                 buffer.SetReadOffset(beforeReadIndex + length);
             }
             return packet;

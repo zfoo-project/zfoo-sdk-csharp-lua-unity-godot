@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 namespace zfoocs
 {
     
@@ -8,16 +7,7 @@ namespace zfoocs
     {
         public int key;
         public long value;
-
-        public static PairIntLong ValueOf(int key, long value)
-        {
-            var packet = new PairIntLong();
-            packet.key = key;
-            packet.value = value;
-            return packet;
-        }
     }
-
 
     public class PairIntLongRegistration : IProtocolRegistration
     {
@@ -25,7 +15,7 @@ namespace zfoocs
         {
             return 110;
         }
-
+    
         public void Write(ByteBuffer buffer, object packet)
         {
             if (packet == null)
@@ -38,7 +28,7 @@ namespace zfoocs
             buffer.WriteInt(message.key);
             buffer.WriteLong(message.value);
         }
-
+    
         public object Read(ByteBuffer buffer)
         {
             int length = buffer.ReadInt();
@@ -46,13 +36,14 @@ namespace zfoocs
             {
                 return null;
             }
-            int beforeReadIndex = buffer.ReadOffset();
+            int beforeReadIndex = buffer.GetReadOffset();
             PairIntLong packet = new PairIntLong();
             int result0 = buffer.ReadInt();
             packet.key = result0;
             long result1 = buffer.ReadLong();
             packet.value = result1;
-            if (length > 0) {
+            if (length > 0)
+            {
                 buffer.SetReadOffset(beforeReadIndex + length);
             }
             return packet;
